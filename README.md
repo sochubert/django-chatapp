@@ -1,1 +1,1 @@
-# fuzzy-invention
+# django-chatapp
