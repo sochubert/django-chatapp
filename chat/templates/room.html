@@ -3,12 +3,14 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap");
+
       body {
+        font-family: "Familjen Grotesk", sans-serif;
         margin: 0 auto;
         max-width: 800px;
         padding: 0 20px;
       }
-
       .container {
         border: 2px solid #dedede;
         background-color: #f1f1f1;
@@ -20,6 +22,14 @@
       .darker {
         border-color: #ccc;
         background-color: #ddd;
+        margin-right: 300px;
+      }
+
+      .lighter {
+        border-color: #ccc;
+        background-color: #fff;
+        text-align: left;
+        margin-left: 300px;
       }
 
       .container::after {
@@ -51,24 +61,36 @@
         float: left;
         color: #999;
       }
+
+      .center__container {
+        text-align: center;
+      }
+      .header__section {
+        border-radius: 5px;
+        background-color: #6c7b8b;
+        padding: 20px;
+      }
     </style>
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"
     ></script>
+    <div align="center" class="header__section">
+      <img
+        src="https://user-images.githubusercontent.com/31719821/218362960-934de89b-b38d-4b52-ba89-89d377f3fa04.jpg"
+      />
+      <h1 style="color: white">Innovation for your smile</h1>
+    </div>
   </head>
   <body>
-    <h2>{{room}} - DjChat</h2>
-
-    <div id="display">
-      <div class="container darker">
-        {% comment %} <b>Tom</b>
-        <p>Hello Everyone, How Are You Guys Doing?</p>
-        <span class="time-left">20th, April 2021</span> {% endcomment %}
-      </div>
+    <div class="center__container">
+      <h1>{{room}}</h1>
+      <p>{{room_details.description}}</p>
     </div>
-
+    <div id="display">
+      <div class="container darker"></div>
+    </div>
     <script>
       $(document).ready(function () {
         setInterval(function () {
@@ -79,15 +101,26 @@
               console.log(response);
               $("#display").empty();
               for (var key in response.messages) {
-                var temp =
-                  "<div class='container darker'><b>" +
-                  response.messages[key].user +
-                  "</b><p>" +
-                  response.messages[key].value +
-                  "</p><span class='time-left'>" +
-                  response.messages[key].date +
-                  "</span></div>";
-                $("#display").append(temp);
+                if (username.value == response.messages[key].user) {
+                  var temp =
+                    "<div class='container lighter'>" +
+                    "<p>" +
+                    response.messages[key].value +
+                    "</p><span class='time-right'>" +
+                    response.messages[key].date.slice(11, 19) +
+                    "</span></div>";
+                  $("#display").append(temp);
+                } else {
+                  var temp =
+                    "<div class='container darker'><b>" +
+                    response.messages[key].user +
+                    "</b><p>" +
+                    response.messages[key].value +
+                    "</p><span class='time-left'>" +
+                    response.messages[key].date.slice(11, 19) +
+                    "</span></div>";
+                  $("#display").append(temp);
+                }
               }
             },
             error: function (response) {
@@ -113,17 +146,19 @@
 
         input[type="submit"] {
           width: 100%;
-          background-color: #4caf50;
-          color: white;
-          padding: 14px 20px;
-          margin: 8px 0;
+          background-color: #6c7b8b;
           border: none;
-          border-radius: 4px;
-          cursor: pointer;
+          color: white;
+          padding: 16px 32px;
+          text-align: center;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition: 0.8s;
         }
 
         input[type="submit"]:hover {
-          background-color: #45a049;
+          background-color: #005b96;
+          color: white;
         }
 
         div {

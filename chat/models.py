@@ -6,6 +6,12 @@ from datetime import datetime
 
 class Room(models.Model):
     name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, null=True, blank=True)
+    featured_image = models.ImageField(
+        null=True, blank=True, default="default.jpg")
+
+    def __str__(self):
+        return self.name
 
 
 class Message(models.Model):
@@ -13,3 +19,6 @@ class Message(models.Model):
     date = models.DateTimeField(default=datetime.now, blank=True)
     user = models.CharField(max_length=10000)
     room = models.CharField(max_length=10000)
+
+    def __str__(self):
+        return self.value
